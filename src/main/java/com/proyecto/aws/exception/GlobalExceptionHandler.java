@@ -34,6 +34,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatusCode()).body(error);
     }
 
+    @ExceptionHandler(org.springframework.web.servlet.resource.NoResourceFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNoResourceFound(Exception ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Endpoint no encontrado");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(org.springframework.web.HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<Map<String, String>> handleMethodNotSupported(Exception ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Método HTTP no soportado");
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(error);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGlobalException(Exception ex) {
         Map<String, String> error = new HashMap<>();
