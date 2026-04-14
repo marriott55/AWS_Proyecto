@@ -36,7 +36,9 @@ public class ProfesorController {
 
     @PostMapping
     public ResponseEntity<Profesor> createProfesor(@Valid @RequestBody Profesor profesor) {
-        profesor.setId(counter.incrementAndGet());
+        if (profesor.getId() == null || profesor.getId() == 0) {
+            profesor.setId(counter.incrementAndGet());
+        }
         profesores.add(profesor);
         return ResponseEntity.status(HttpStatus.CREATED).body(profesor);
     }

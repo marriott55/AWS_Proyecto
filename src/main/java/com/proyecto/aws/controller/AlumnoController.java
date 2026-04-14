@@ -36,7 +36,9 @@ public class AlumnoController {
 
     @PostMapping
     public ResponseEntity<Alumno> createAlumno(@Valid @RequestBody Alumno alumno) {
-        alumno.setId(counter.incrementAndGet());
+        if (alumno.getId() == null || alumno.getId() == 0) {
+            alumno.setId(counter.incrementAndGet());
+        }
         alumnos.add(alumno);
         return ResponseEntity.status(HttpStatus.CREATED).body(alumno);
     }
